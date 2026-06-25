@@ -50,7 +50,7 @@ fun OmniPortalView(
     val scope = rememberCoroutineScope()
     val focusManager = LocalFocusManager.current
 
-    val categories = listOf("All", "AI Assistants", "Study & Research", "Coding & Compilers", "Math & STEM")
+    val categories = listOf("All", "AI Assistants", "Engineering & Degree", "Coding & Compilers", "Study & Research", "Math & STEM")
 
     val filteredPlatforms = remember(selectedCategory) {
         if (selectedCategory == "All") PlatformsRepo.allPlatforms
@@ -328,6 +328,7 @@ fun PlatformItemCard(
                         "AI Assistants" -> Icons.Default.SmartToy
                         "Math & STEM" -> Icons.Default.Calculate
                         "Coding & Compilers" -> Icons.Default.Code
+                        "Engineering & Degree" -> Icons.Default.Engineering
                         else -> Icons.Default.School
                     },
                     contentDescription = platform.name,

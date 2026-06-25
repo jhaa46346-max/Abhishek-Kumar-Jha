@@ -21,6 +21,8 @@ import com.example.ui.screens.IdeaVaultView
 import com.example.ui.screens.OmniPortalView
 import com.example.ui.screens.SecurityAuditView
 import com.example.ui.screens.StudyToolsView
+import com.example.ui.screens.MainMenuSheet
+import com.example.ui.screens.NotificationMenuDialog
 import com.example.ui.theme.MyApplicationTheme
 
 class MainActivity : ComponentActivity() {
@@ -59,6 +61,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainStudentWorkspace(
     user: UserEntity,
@@ -66,8 +69,40 @@ fun MainStudentWorkspace(
     onLogout: () -> Unit
 ) {
     var selectedTab by remember { mutableStateOf(0) }
+    var showNotifs by remember { mutableStateOf(false) }
+    var showMenu by remember { mutableStateOf(false) }
+
+    if (showNotifs) {
+        NotificationMenuDialog(onDismiss = { showNotifs = false })
+    }
+
+    if (showMenu) {
+        MainMenuSheet(
+            user = user,
+            onDismiss = { showMenu = false },
+            onLogoutClick = {
+                showMenu = false
+                onLogout()
+            }
+        )
+    }
 
     Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("Nexus Hub Portal", style = MaterialTheme.typography.titleMedium) },
+                actions = {
+                    IconButton(onClick = { showNotifs = true }) {
+                        BadgedBox(badge = { Badge { Text("4") } }) {
+                            Icon(Icons.Default.Notifications, contentDescription = "Notifications")
+                        }
+                    }
+                    IconButton(onClick = { showMenu = true }) {
+                        Icon(Icons.Default.AccountCircle, contentDescription = "Main Menu")
+                    }
+                }
+            )
+        },
         bottomBar = {
             NavigationBar {
                 NavigationBarItem(
