@@ -16,7 +16,9 @@ import com.example.ui.AuthUiState
 import com.example.ui.AuthViewModel
 import com.example.ui.MainViewModel
 import com.example.ui.screens.AuthScreen
+import com.example.ui.screens.CodingHubView
 import com.example.ui.screens.IdeaVaultView
+import com.example.ui.screens.OmniPortalView
 import com.example.ui.screens.SecurityAuditView
 import com.example.ui.screens.StudyToolsView
 import com.example.ui.theme.MyApplicationTheme
@@ -71,18 +73,30 @@ fun MainStudentWorkspace(
                 NavigationBarItem(
                     selected = selectedTab == 0,
                     onClick = { selectedTab = 0 },
-                    icon = { Icon(Icons.Default.Shield, contentDescription = "Idea Vault") },
-                    label = { Text("IP Vault") }
+                    icon = { Icon(Icons.Default.Hub, contentDescription = "Omni AI Portal") },
+                    label = { Text("Omni AI") }
                 )
                 NavigationBarItem(
                     selected = selectedTab == 1,
                     onClick = { selectedTab = 1 },
-                    icon = { Icon(Icons.Default.School, contentDescription = "Study Planner") },
-                    label = { Text("Study Hub") }
+                    icon = { Icon(Icons.Default.Terminal, contentDescription = "Coding IDE") },
+                    label = { Text("IDE Hub") }
                 )
                 NavigationBarItem(
                     selected = selectedTab == 2,
                     onClick = { selectedTab = 2 },
+                    icon = { Icon(Icons.Default.Shield, contentDescription = "Idea Vault") },
+                    label = { Text("IP Vault") }
+                )
+                NavigationBarItem(
+                    selected = selectedTab == 3,
+                    onClick = { selectedTab = 3 },
+                    icon = { Icon(Icons.Default.School, contentDescription = "Study Planner") },
+                    label = { Text("Study Hub") }
+                )
+                NavigationBarItem(
+                    selected = selectedTab == 4,
+                    onClick = { selectedTab = 4 },
                     icon = { Icon(Icons.Default.Security, contentDescription = "Security Shield") },
                     label = { Text("30D Shield") }
                 )
@@ -91,9 +105,11 @@ fun MainStudentWorkspace(
     ) { innerPadding ->
         Box(modifier = Modifier.padding(innerPadding).fillMaxSize()) {
             when (selectedTab) {
-                0 -> IdeaVaultView(user = user, viewModel = mainViewModel)
-                1 -> StudyToolsView(user = user, viewModel = mainViewModel)
-                2 -> SecurityAuditView(user = user, viewModel = mainViewModel, onLogoutClick = onLogout)
+                0 -> OmniPortalView(user = user)
+                1 -> CodingHubView(user = user)
+                2 -> IdeaVaultView(user = user, viewModel = mainViewModel)
+                3 -> StudyToolsView(user = user, viewModel = mainViewModel)
+                4 -> SecurityAuditView(user = user, viewModel = mainViewModel, onLogoutClick = onLogout)
             }
         }
     }
